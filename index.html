@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Korgat | Telegram Гарант — Red Line RGB</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a050f, #000000);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            color: #fff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* RGB анимированный фон-эффект */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 40% 50%, rgba(255, 0, 0, 0.08), rgba(255, 255, 255, 0.02) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* RGB animated border для всех карточек и кнопок — универсальный класс */
+        @keyframes rgbBorder {
+            0% {
+                border-color: rgb(255, 0, 0);
+                box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            }
+            33% {
+                border-color: rgb(255, 255, 255);
+                box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+            }
+            66% {
+                border-color: rgb(255, 80, 80);
+                box-shadow: 0 0 10px rgba(255, 100, 100, 0.9);
+            }
+            100% {
+                border-color: rgb(255, 0, 0);
+                box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            }
+        }
+
+        /* кнопки с RGB анимацией */
+        .rgb-glow {
+            animation: rgbBorder 2.2s infinite ease;
+            transition: all 0.2s;
+        }
+
+        /* header / hero */
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 50, 50, 0.4);
+        }
+        .logo {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF, #FF3333, #FF6666, #FFFFFF);
+            background-size: 300% 200%;
+            animation: redWhiteShine 4s ease infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(255,0,0,0.3);
+        }
+        @keyframes redWhiteShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .tagline {
+            font-size: 1.2rem;
+            color: #ffbbbb;
+            margin-top: 8px;
+            text-shadow: 0 0 6px #ff4444;
+        }
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 28px 0 16px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1.5px solid;
+            animation: rgbBorder 2.5s infinite ease;
+            transition: 0.2s;
+        }
+        .badge i {
+            margin-right: 8px;
+            color: #ff5555;
+            text-shadow: 0 0 5px red;
+        }
+        .badge:hover {
+            transform: scale(1.05);
+            background: rgba(30, 0, 0, 0.8);
+        }
+
+        /* sections general */
+        section {
+            padding: 64px 0;
+            border-bottom: 1px solid rgba(255, 60, 60, 0.2);
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+            background: linear-gradient(120deg, #ffffff, #ff8888, #ff3333);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .section-sub {
+            color: #ffcfcf;
+            max-width: 700px;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+        }
+
+        /* cards / stats — красный/белый градиент */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin: 32px 0 20px;
+            justify-content: center;
+        }
+        .stat-card {
+            background: linear-gradient(145deg, #1a0808, #050101);
+            border-radius: 40px;
+            padding: 32px 28px;
+            text-align: center;
+            flex: 1;
+            min-width: 180px;
+            border: 1.5px solid;
+            animation: rgbBorder 2.5s infinite ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: linear-gradient(145deg, #2a0c0c, #0a0202);
+            box-shadow: 0 0 30px rgba(255, 50, 50, 0.6);
+        }
+        .stat-number {
+            font-size: 3.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #FF6666);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: #ffc0c0;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* steps — карточки с RGB обводкой */
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 32px;
+        }
+        .step-item {
+            background: rgba(20, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 24px 20px;
+            flex: 1;
+            min-width: 160px;
+            border: 1.5px solid;
+            animation: rgbBorder 2.2s infinite ease;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .step-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 80, 80, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .step-item:hover::before {
+            opacity: 1;
+        }
+        .step-item:hover {
+            transform: translateY(-5px);
+            background: #1f0a0a;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+        }
+        .step-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #FF5555, #FFFFFF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        .step-text {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffe0e0;
+        }
+
+        /* контакты - яркие кнопки с RGB анимацией */
+        .contacts-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 32px 0 24px;
+        }
+        .contact-card {
+            background: rgba(15, 3, 3, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 18px 28px;
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #ffffff;
+            border: 1.5px solid;
+            animation: rgbBorder 2.4s infinite ease;
+            position: relative;
+        }
+        .contact-card i {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 4px #ff4444);
+            transition: 0.2s;
+        }
+        .contact-info h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffdddd;
+        }
+        .contact-info p {
+            font-size: 0.85rem;
+            color: #ffaaaa;
+        }
+        .contact-card:hover {
+            transform: scale(1.02) translateY(-5px);
+            background: #2c0b0b;
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.7);
+            border-color: #ff3333;
+        }
+        .contact-card:hover i {
+            filter: drop-shadow(0 0 12px #ff7777);
+        }
+
+        /* кошелек с RGB рамкой */
+        .wallet-box {
+            background: linear-gradient(135deg, #130303, #010101);
+            border-radius: 40px;
+            padding: 32px;
+            margin: 40px 0 20px;
+            border: 1.5px solid;
+            animation: rgbBorder 2.5s infinite ease;
+            transition: 0.2s;
+        }
+        .wallet-box:hover {
+            box-shadow: 0 0 35px rgba(255, 30, 30, 0.8);
+        }
+        .wallet-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff7a7a;
+            margin-bottom: 12px;
+        }
+        .wallet-address {
+            font-family: monospace;
+            font-size: 1rem;
+            background: #0a0101;
+            padding: 16px 20px;
+            border-radius: 28px;
+            word-break: break-all;
+            border: 1px solid #ff4d4d;
+            color: #ffd9d9;
+        }
+
+        /* переливающаяся кнопка копирования (RGB контур и фон с движением) */
+        @keyflow rgbBorderMove {
+            0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; background-position: 0% 50%; }
+            50% { border-color: #ffffff; box-shadow: 0 0 18px #ffffff; background-position: 100% 50%; }
+            100% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; background-position: 0% 50%; }
+        }
+        .copy-btn {
+            background: linear-gradient(90deg, #aa2222, #ff4444, #ff8888, #ff4444);
+            background-size: 250% 100%;
+            animation: rgbBorder 1.8s infinite ease, gradientShift 2.2s infinite;
+            border: 2px solid;
+            border-color: #ff0000;
+            color: white;
+            font-weight: bold;
+            padding: 12px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            margin-top: 20px;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .copy-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 28px rgba(255, 50, 50, 1);
+            border-color: #ffffff;
+        }
+
+        /* footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.85rem;
+            color: #ffb5b5;
+            border-top: 1px solid rgba(255, 80, 80, 0.3);
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 0 20px;
+            }
+            .logo {
+                font-size: 3rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .step-item, .contact-card {
+                min-width: 100%;
+            }
+        }
+
+        /* универсальная анимация появления */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.6s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* доп. эффект для всех rgb элементов */
+        .rgb-glow-static {
+            animation: rgbBorder 2.2s infinite ease;
+        }
+        hr {
+            border-color: #ff4d4d40;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="container">
+        <div class="logo">Korgat</div>
+        <div class="tagline">Telegram Гарант</div>
+        <div class="badge-row">
+            <span class="badge"><i class="fas fa-shield-alt"></i> Безопасные сделки</span>
+            <span class="badge"><i class="fas fa-percent"></i> Комиссия 1%</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Кто такой гарант? -->
+    <section>
+        <h2 class="section-title">Кто такой гарант?</h2>
+        <p class="section-sub">Гарант — это физическое лицо, компания или организация, которые официально подтверждают выполнение обязательств одной стороны перед другой. Проведено более 3700+ успешных сделок.</p>
+        
+        <div class="stats-row">
+            <div class="stat-card fade-up">
+                <div class="stat-number">3.7k+</div>
+                <div class="stat-label">Сделок</div>
+            </div>
+            <div class="stat-card fade-up">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Выплат</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Навигация -->
+    <section>
+        <h2 class="section-title">Навигация</h2>
+        <div class="contacts-grid">
+            <a href="https://t.me/korgat_news" target="_blank" rel="noopener noreferrer" class="contact-card fade-up">
+                <i class="fab fa-telegram"></i>
+                <div class="contact-info">
+                    <h4>Новостной канал</h4>
+                    <p>@korgat_news</p>
+                </div>
+            </a>
+            <a href="https://t.me/adp_tgkorgat" target="_blank" rel="noopener noreferrer" class="contact-card fade-up">
+                <i class="fas fa-plug"></i>
+                <div class="contact-info">
+                    <h4>Адаптер</h4>
+                    <p>@adp_tgkorgat</p>
+                </div>
+            </a>
+            <a href="https://t.me/repkorgat" target="_blank" rel="noopener noreferrer" class="contact-card fade-up">
+                <i class="fas fa-star"></i>
+                <div class="contact-info">
+                    <h4>Отзывы</h4>
+                    <p>@repkorgat</p>
+                </div>
+            </a>
+            <a href="https://t.me/korgat" target="_blank" rel="noopener noreferrer" class="contact-card fade-up">
+                <i class="fas fa-user-circle"></i>
+                <div class="contact-info">
+                    <h4>Личный контакт</h4>
+                    <p>@korgat</p>
+                </div>
+            </a>
+            <a href="https://t.me/korgat?start=gift" target="_blank" rel="noopener noreferrer" class="contact-card fade-up">
+                <i class="fas fa-gift"></i>
+                <div class="contact-info">
+                    <h4>Gifts | Подарок от меня</h4>
+                    <p>🎁 telegram</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Гарант сделок -->
+    <section>
+        <h2 class="section-title">Гарант сделок</h2>
+        <p class="section-sub">Безопасность ваших активов — мой главный приоритет. Работаю честно и быстро.</p>
+        <div class="badge-row" style="justify-content: flex-start; margin-top: 0;">
+            <span class="badge" style="background: #1f0303; border-width: 1.5px;"><i class="fas fa-gem"></i> Комиссия — 1%</span>
+        </div>
+    </section>
+
+    <!-- Как проходят сделки -->
+    <section>
+        <h2 class="section-title">Как проходят сделки</h2>
+        <div class="steps">
+            <div class="step-item fade-up"><div class="step-num">1</div><div class="step-text">Договариваетесь о сделке</div></div>
+            <div class="step-item fade-up"><div class="step-num">2</div><div class="step-text">Пишете гаранту @korgat</div></div>
+            <div class="step-item fade-up"><div class="step-num">3</div><div class="step-text">Покупатель переводит оплату</div></div>
+            <div class="step-item fade-up"><div class="step-num">4</div><div class="step-text">Продавец передает товар</div></div>
+            <div class="step-item fade-up"><div class="step-num">5</div><div class="step-text">Гарант выплачивает средства</div></div>
+        </div>
+    </section>
+
+    <!-- Кошелек -->
+    <section style="border-bottom: none;">
+        <h2 class="section-title">Кошелек</h2>
+        <div class="wallet-box fade-up">
+            <div class="wallet-label"><i class="fas fa-wallet"></i> 🔴 Адрес для переводов (USDT / TON)</div>
+            <div class="wallet-address" id="walletAddress">UQB7HVHx9vg2MHzL5IYUowbBcDVM-mOwy-9RPeFQU3S0gisQ</div>
+            <button class="copy-btn" id="copyWalletBtn"><i class="far fa-copy"></i> Копировать адрес</button>
+            <p style="font-size: 0.75rem; margin-top: 18px; color: #ffa3a3;">✨ RGB защита | Только после согласования с гарантом</p>
+        </div>
+    </section>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p>© 2025 Korgat — Telegram Гарант. <span style="color:#ff5555;">🔴 Красный уровень безопасности 🔴</span></p>
+        <p style="margin-top: 8px;">⚡️ Молниеносные сделки | RGB-контур гарантии | 24/7</p>
+    </div>
+</div>
+
+<script>
+    // точный адрес кошелька из оригинала
+    const walletAddr = "UQB7HVHx9vg2MHzL5IYUowbBcDVM-mOwy-9RPeFQU3S0gisQ";
+    const copyBtn = document.getElementById('copyWalletBtn');
+    const walletSpan = document.getElementById('walletAddress');
+    if(walletSpan) walletSpan.innerText = walletAddr;
+
+    copyBtn?.addEventListener('click', () => {
+        navigator.clipboard.writeText(walletAddr).then(() => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Скопировано! ✨';
+            copyBtn.style.animation = 'none';
+            copyBtn.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.style.animation = '';
+                copyBtn.style.transform = '';
+            }, 1800);
+        }).catch(() => {
+            alert('🔴 Скопируйте адрес вручную (RGB защита активна)');
+        });
+    });
+
+    // анимация появления
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: "0px 0px -20px 0px" });
+    
+    fadeElements.forEach(el => observer.observe(el));
+    
+    // дополнительная активация для видимых элементов
+    setTimeout(() => {
+        fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 80) {
+                el.classList.add('visible');
+                observer.unobserve(el);
+            }
+        });
+    }, 100);
+
+    // добавим эффект RGB мерцания для всех элементов с анимацией border дополнительно (чтобы гарантировать)
+    const allRgbElements = document.querySelectorAll('.badge, .stat-card, .step-item, .contact-card, .wallet-box, .copy-btn');
+    allRgbElements.forEach(el => {
+        if (!el.style.animation) {
+            el.style.animation = 'rgbBorder 2.2s infinite ease';
+        }
+    });
+</script>
+</body>
+</html>
